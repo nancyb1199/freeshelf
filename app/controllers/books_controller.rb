@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   def index
       @books = Book.all
   end
@@ -40,7 +42,7 @@ end
 
   private
     def book_params
-      params.require(:book).permit(:title, :author, :description, :url)
+      params.require(:book).permit(:title, :author, :description, :url, :user_id)
     end
 
 end

@@ -10,13 +10,13 @@
 </p>
 
 <p>
-  <strong>description:</strong>
+  <strong>Description:</strong>
   <%= @book.description %>
 </p>
 
 <p>
   <strong>URL:</strong>
-  <%= @book.url %>
+  <%= link_to @book.url %>
 </p>
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
