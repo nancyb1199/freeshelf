@@ -13,12 +13,16 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
+    if session[:user_id] == Book.find(params[:id]).user_id
+      @book = Book.find(params[:id])
+    else
+      render 'not_auth'
+    end
   end
 
   def create
     @book = Book.new(book_params)
-
+    @book.user_id = session[:user_id]
     @book.save
     redirect_to @book
   end
@@ -34,10 +38,14 @@ class BooksController < ApplicationController
   end
 
 def destroy
-  @book = Book.find(params[:id])
-  @book.destroy
 
-  redirect_to books_path
+  if session[:user_id] == Book.find(params[:id]).user_id
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to books_path
+  else
+    render 'not_auth'
+  end
 end
 
   private
